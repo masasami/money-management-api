@@ -5,6 +5,8 @@ name = "pypi"
 
 [packages]
 fastapi = "*"
+pymysql = "*"
+python-dotenv = "*"
 
 [dev-packages]
 
