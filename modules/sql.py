@@ -6,7 +6,8 @@ SELECT * FROM user WHERE login_id = %(login_id)s
     SELECT_ACCOUNT_BY_ID_USER = '''
 SELECT 
     account.*,
-    tag.title
+    tag.title,
+    tag.color_code
 FROM account 
 LEFT OUTER JOIN tag ON tag.id_tag = account.id_tag
 WHERE account.id_user = %(id_user)s
@@ -15,7 +16,8 @@ WHERE account.id_user = %(id_user)s
     SELECT_ACCOUNT_BY_ID_USER_START_END = '''
 SELECT 
     account.*,
-    tag.title
+    tag.title,
+    tag.color_code
 FROM account 
 LEFT OUTER JOIN tag ON tag.id_tag = account.id_tag
 WHERE account.id_user = %(id_user)s
