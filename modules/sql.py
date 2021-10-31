@@ -50,3 +50,40 @@ WHERE id_account = %(id_account)s
     DELETE_ACCOUNT = '''
 DELETE FROM account WHERE id_account = %(id_account)s
     '''
+
+    SELECT_TAG_BY_ID_USER = '''
+SELECT * FROM tag WHERE id_user = %(id_user)s
+    '''
+
+    INSERT_TAG = '''
+INSERT INTO tag (
+    id_tag,
+    id_user,
+    title,
+    color_code,
+    dt_create,
+    dt_update
+) VALUES (
+    %(id_tag)s,
+    %(id_user)s,
+    %(title)s,
+    %(color_code)s,
+    NOW(),
+    NOW()
+)
+    '''
+
+    UPDATE_TAG = '''
+UPDATE tag SET
+    id_tag = %(id_tag)s,
+    id_user = %(id_user)s,
+    title = %(title)s,
+    color_code = %(color_code)s,
+    dt_create = %(dt_create)s,
+    dt_update = NOW()
+WHERE id_tag = %(id_tag)s
+    '''
+
+    DELETE_TAG = '''
+DELETE FROM tag WHERE id_tag = %(id_tag)s
+    '''

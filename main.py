@@ -2,6 +2,7 @@
 # ルーター
 from routers.connect_router import connect_router
 from routers.account_router import account_router
+from routers.tag_router import tag_router
 
 # ライブラリ
 import os
@@ -22,5 +23,6 @@ app.add_middleware(
 )
 
 
-app.include_router(account_router)
 app.include_router(connect_router)
+app.include_router(account_router)
+app.include_router(tag_router)
