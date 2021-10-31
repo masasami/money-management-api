@@ -3,6 +3,7 @@ from modules.db import DB
 
 connect_router = APIRouter()
 
+
 @connect_router.get('/connect')
 def connect():
     db = DB()
