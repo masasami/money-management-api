@@ -7,7 +7,7 @@ account_router = APIRouter()
 
 
 @account_router.get('/get_accounts_by_id_user/{id_user}')
-def get_account_by_id_user(id_user: int):
+def get_accounts_by_id_user(id_user: int):
     db = DB()
     cur = db.cur
 
