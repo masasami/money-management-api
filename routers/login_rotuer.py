@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Request
+from fastapi import APIRouter, Request, HTTPException
 from modules.db import DB
 from modules.sql import SQL
 
@@ -17,4 +17,8 @@ async def login(request: Request):
         'login_id': param['login_id']
     })
     user = cur.fetchone()
+
+    if user is None:
+        raise HTTPException(401)
+
     return user
