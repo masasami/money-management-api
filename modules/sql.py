@@ -12,6 +12,16 @@ LEFT OUTER JOIN tag ON tag.id_tag = account.id_tag
 WHERE account.id_user = %(id_user)s
     '''
 
+    SELECT_ACCOUNT_BY_ID_USER_START_END = '''
+SELECT 
+    account.*,
+    tag.title
+FROM account 
+LEFT OUTER JOIN tag ON tag.id_tag = account.id_tag
+WHERE account.id_user = %(id_user)s
+AND dt_account BETWEEN %(start)s AND %(end)s
+    '''
+
     SELECT_ACCOUNT_BY_ID_ACCOUNT = '''
 SELECT * FROM account WHERE id_account = %(id_account)s
     '''

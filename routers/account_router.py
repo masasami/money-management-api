@@ -7,11 +7,18 @@ account_router = APIRouter()
 
 
 @account_router.get('/get_accounts_by_id_user/{id_user}')
-def get_accounts_by_id_user(id_user: int):
+def get_accounts_by_id_user(id_user: int, start: str = None, end: str = None):
     db = DB()
     cur = db.cur
 
-    cur.execute(SQL.SELECT_ACCOUNT_BY_ID_USER, {'id_user': id_user})
+    param = {'id_user': id_user}
+    sql = SQL.SELECT_ACCOUNT_BY_ID_USER
+    if start and end:
+        param['start'] = start
+        param['end'] = end
+        sql = SQL.SELECT_ACCOUNT_BY_ID_USER_START_END
+
+    cur.execute(sql, param)
     accounts = cur.fetchall()
 
     return accounts
