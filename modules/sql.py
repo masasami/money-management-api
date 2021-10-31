@@ -7,3 +7,46 @@ FROM account
 LEFT OUTER JOIN tag ON tag.id_tag = account.id_tag
 WHERE account.id_user = %(id_user)s
     '''
+
+    SELECT_ACCOUNT_BY_ID_ACCOUNT = '''
+SELECT * FROM account WHERE id_account = %(id_account)s
+    '''
+
+    INSERT_ACCOUNT = '''
+INSERT INTO account (
+    id_account,
+    id_user,
+    id_tag,
+    debit,
+    credit,
+    dt_account,
+    dt_create,
+    dt_update
+) VALUES (
+    %(id_account)s,
+    %(id_user)s,
+    %(id_tag)s,
+    %(debit)s,
+    %(credit)s,
+    %(dt_account)s,
+    NOW(),
+    NOW()
+)
+    '''
+
+    UPDATE_ACCOUNT = '''
+UPDATE account SET
+    id_account = %(id_account)s,
+    id_user = %(id_user)s,
+    id_tag = %(id_tag)s,
+    debit = %(debit)s,
+    credit = %(credit)s,
+    dt_account = %(dt_account)s,
+    dt_create = %(dt_create)s,
+    dt_update = NOW()
+WHERE id_account = %(id_account)s
+    '''
+
+    DELETE_ACCOUNT = '''
+DELETE FROM account WHERE id_account = %(id_account)s
+    '''
