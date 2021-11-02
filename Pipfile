@@ -8,6 +8,7 @@ fastapi = "*"
 pymysql = "*"
 python-dotenv = "*"
 autopep8 = "*"
+uvicorn = "*"
 
 [dev-packages]
 
