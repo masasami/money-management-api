@@ -9,6 +9,7 @@ pymysql = "*"
 python-dotenv = "*"
 autopep8 = "*"
 uvicorn = "*"
+fastapi-sessions = "*"
 
 [dev-packages]
 
