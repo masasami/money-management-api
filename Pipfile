@@ -10,6 +10,7 @@ python-dotenv = "*"
 autopep8 = "*"
 uvicorn = "*"
 fastapi-sessions = "*"
+pycryptodome = "*"
 
 [dev-packages]
 
