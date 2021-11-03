@@ -3,6 +3,7 @@ from fastapi import HTTPException, Request, Response, Depends, APIRouter
 from modules.sql import SQL
 from modules.db import DB
 from modules.session import SessionData, backend, cookie, verifier
+from modules.hash import create_hash
 
 from uuid import UUID, uuid4
 from dotenv import load_dotenv
@@ -19,12 +20,14 @@ async def login(request: Request, response: Response):
     db = DB()
     cur = db.cur
 
-    # TODO パスワードの暗号化、パスワードをもとにユーザーを取得
-
-    cur.execute(SQL.SELECT_USER_BY_LOGIN_ID, {
-        'login_id': param['login_id']
+    # ログインID、ハッシュ化したパスワードをもとにユーザー取得
+    hashed_password = create_hash(param['password'])
+    cur.execute(SQL.SELECT_USER_BY_LOGIN_ID_PASSWORD, {
+        'login_id': param['login_id'],
+        'password': hashed_password
     })
     user = cur.fetchone()
+
     if user is None:
         raise HTTPException(401)
 
