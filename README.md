@@ -22,3 +22,16 @@ $ pipenv run start
 ```bash
 $ python -c "import os; print(os.urandom(24).hex())"
 ```
+
+# 環境変数に必要な項目
+```
+ALLOW_ORIGIN=
+SECRET_KEY=
+CRYPTO_PASSWORD=
+
+DB_USER=
+DB_PASS=
+DB_HOST=
+DB_PORT=
+DB_NAME=
+```
