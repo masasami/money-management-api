@@ -20,7 +20,7 @@ $ pipenv run start
 
 # シークレットキーの生成
 ```bash
-$ python -c "import os; print(os.urandom(24).hex())"
+$ python -c 'import os; print(os.urandom(24).hex())'
 ```
 
 # 環境変数に必要な項目
@@ -28,6 +28,7 @@ $ python -c "import os; print(os.urandom(24).hex())"
 ALLOW_ORIGIN=
 SECRET_KEY=
 CRYPTO_PASSWORD=
+HASH_KEY=
 
 DB_USER=
 DB_PASS=
