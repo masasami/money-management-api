@@ -1,4 +1,8 @@
 class SQL:
+    SELECT_USER_BY_ID_USER = '''
+SELECT * FROM user WHERE id_user = %(id_user)s
+    '''
+
     SELECT_USER_BY_LOGIN_ID = '''
 SELECT * FROM user WHERE login_id = %(login_id)s
     '''
