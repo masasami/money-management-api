@@ -105,3 +105,20 @@ async def upsert_accounts(request: Request):
     con.commit()
 
     return accounts
+
+
+@account_router.post('/delete_accounts')
+async def delete_accounts(request: Request):
+    param = await request.json()
+    id_accounts = param['id_accounts']
+    print(id_accounts)
+
+    db = DB()
+    con = db.con
+    cur = db.cur
+
+    for id_account in id_accounts:
+        cur.execute(SQL.DELETE_ACCOUNT, {'id_account': id_account})
+    con.commit()
+
+    return None
