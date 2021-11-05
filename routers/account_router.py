@@ -83,16 +83,25 @@ def delete_account(id_account: int):
 async def upsert_accounts(request: Request):
     param = await request.json()
     accounts = param['accounts']
+
     db = DB()
     con = db.con
     cur = db.cur
 
-    for account in accounts:
+    for index, account in enumerate(accounts):
         if account['id_account']:
             cur.execute(SQL.UPDATE_ACCOUNT, account)
+            cur.execute(SQL.SELECT_ACCOUNT_BY_ID_ACCOUNT, {
+                'id_account': account['id_account']
+            })
+            accounts[index] = cur.fetchone()
         else:
             cur.execute(SQL.INSERT_ACCOUNT, account)
-            account['id_account'] = cur.lastrowid
+            id_account = cur.lastrowid
+            cur.execute(SQL.SELECT_ACCOUNT_BY_ID_ACCOUNT, {
+                'id_account': id_account
+            })
+            accounts[index] = cur.fetchone()
     con.commit()
 
     return accounts
