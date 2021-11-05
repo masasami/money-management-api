@@ -77,3 +77,22 @@ def delete_account(id_account: int):
     con.commit()
 
     return None
+
+
+@account_router.post('/upsert_accounts')
+async def upsert_accounts(request: Request):
+    param = await request.json()
+    accounts = param['accounts']
+    db = DB()
+    con = db.con
+    cur = db.cur
+
+    for account in accounts:
+        if account['id_account']:
+            cur.execute(SQL.UPDATE_ACCOUNT, account)
+        else:
+            cur.execute(SQL.INSERT_ACCOUNT, account)
+            account['id_account'] = cur.lastrowid
+    con.commit()
+
+    return accounts
