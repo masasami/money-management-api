@@ -35,7 +35,13 @@ AND dt_account BETWEEN %(start)s AND %(end)s
     '''
 
     SELECT_ACCOUNT_BY_ID_ACCOUNT = '''
-SELECT * FROM account WHERE id_account = %(id_account)s
+SELECT 
+    account.*,
+    tag.title,
+    tag.color_code
+FROM account
+LEFT OUTER JOIN tag ON tag.id_tag = account.id_tag
+WHERE id_account = %(id_account)s
     '''
 
     INSERT_ACCOUNT = '''
