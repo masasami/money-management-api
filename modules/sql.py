@@ -86,6 +86,10 @@ WHERE id_account = %(id_account)s
 DELETE FROM account WHERE id_account = %(id_account)s
     '''
 
+    SELECT_TAG_BY_ID_TAG = '''
+SELECT * FROM tag WHERE id_tag = %(id_tag)s
+    '''
+
     SELECT_TAG_BY_ID_USER = '''
 SELECT * FROM tag WHERE id_user = %(id_user)s
     '''

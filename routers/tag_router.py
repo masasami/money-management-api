@@ -27,9 +27,10 @@ async def create_tag(request: Request):
     cur.execute(SQL.INSERT_TAG, tag_dto)
     con.commit()
     id_tag = cur.lastrowid
-    tag_dto['id_tag'] = id_tag
+    cur.execute(SQL.SELECT_TAG_BY_ID_TAG, {'id_tag': id_tag})
+    tag = cur.fetchone()
 
-    return tag_dto
+    return tag
 
 
 @tag_router.put('/update_tag/{id_tag}')
@@ -43,8 +44,10 @@ async def update_tag(id_tag: int, request: Request):
 
     cur.execute(SQL.UPDATE_TAG, tag_dto)
     con.commit()
+    cur.execute(SQL.SELECT_TAG_BY_ID_TAG, {'id_tag': id_tag})
+    tag = cur.fetchone()
 
-    return tag_dto
+    return tag
 
 
 @tag_router.delete('/delete_tag/{id_tag}')
