@@ -34,7 +34,7 @@ WHERE account.id_user = %(id_user)s
 AND dt_account BETWEEN %(start)s AND %(end)s
     '''
 
-    SELECT_ACCOUNT_BY_ID_ACCOUNT = '''
+    SELECT_ACCOUNT_BY_ID_ACCOUNT_ID_USER = '''
 SELECT 
     account.*,
     tag.title,
@@ -42,6 +42,7 @@ SELECT
 FROM account
 LEFT OUTER JOIN tag ON tag.id_tag = account.id_tag
 WHERE id_account = %(id_account)s
+AND account.id_user = %(id_user)s
     '''
 
     INSERT_ACCOUNT = '''
@@ -71,7 +72,6 @@ INSERT INTO account (
     UPDATE_ACCOUNT = '''
 UPDATE account SET
     id_account = %(id_account)s,
-    id_user = %(id_user)s,
     id_tag = %(id_tag)s,
     content = %(content)s,
     debit = %(debit)s,
@@ -80,14 +80,21 @@ UPDATE account SET
     dt_create = %(dt_create)s,
     dt_update = NOW()
 WHERE id_account = %(id_account)s
+AND id_user = %(id_user)s
     '''
 
     DELETE_ACCOUNT = '''
-DELETE FROM account WHERE id_account = %(id_account)s
+DELETE FROM account 
+WHERE id_account = %(id_account)s
+AND id_user = %(id_user)s
     '''
 
-    SELECT_TAG_BY_ID_TAG = '''
-SELECT * FROM tag WHERE id_tag = %(id_tag)s
+    SELECT_TAG_BY_ID_TAG_ID_USER = '''
+SELECT 
+    *
+FROM tag
+WHERE id_tag = %(id_tag)s
+AND id_user = %(id_user)s
     '''
 
     SELECT_TAG_BY_ID_USER = '''
@@ -115,14 +122,16 @@ INSERT INTO tag (
     UPDATE_TAG = '''
 UPDATE tag SET
     id_tag = %(id_tag)s,
-    id_user = %(id_user)s,
     title = %(title)s,
     color_code = %(color_code)s,
     dt_create = %(dt_create)s,
     dt_update = NOW()
 WHERE id_tag = %(id_tag)s
+AND id_user = %(id_user)s
     '''
 
     DELETE_TAG = '''
-DELETE FROM tag WHERE id_tag = %(id_tag)s
+DELETE FROM tag 
+WHERE id_tag = %(id_tag)s
+AND id_user = %(id_user)s
     '''

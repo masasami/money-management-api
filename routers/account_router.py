@@ -1,14 +1,22 @@
-from fastapi import APIRouter, Depends, Request
+from fastapi import APIRouter, Depends, Request, HTTPException
 from modules.db import DB
 from modules.sql import SQL
-from modules.session import cookie
+from modules.session import SessionData, cookie, verifier, backend
 
-account_router = APIRouter()
-account_router.dependencies = [Depends(cookie)]
+account_router = APIRouter(
+    dependencies=[Depends(cookie), Depends(verifier)]
+)
 
 
-@account_router.get('/get_accounts_by_id_user/{id_user}')
-def get_accounts_by_id_user(id_user: int, start: str = None, end: str = None):
+@account_router.get('/get_accounts_by_id_user')
+async def get_accounts_by_id_user(
+    start: str = None,
+    end: str = None,
+    session_data: SessionData = Depends(verifier)
+):
+    # ユーザーID
+    id_user = session_data.id_user
+
     db = DB()
     cur = db.cur
 
@@ -25,20 +33,10 @@ def get_accounts_by_id_user(id_user: int, start: str = None, end: str = None):
     return accounts
 
 
-@account_router.get('/get_account_by_id_account/{id_account}')
-def get_account_by_id_account(id_account: int):
-    db = DB()
-    cur = db.cur
-
-    cur.execute(SQL.SELECT_ACCOUNT_BY_ID_ACCOUNT, {'id_account': id_account})
-    account = cur.fetchone()
-
-    return account
-
-
 @account_router.post('/create_account')
-async def create_account(request: Request):
+async def create_account(request: Request, session_data: SessionData = Depends(verifier)):
     account_dto = await request.json()
+    account_dto['id_user'] = session_data.id_user
 
     db = DB()
     con = db.con
@@ -54,9 +52,10 @@ async def create_account(request: Request):
 
 
 @account_router.put('/update_account/{id_account}')
-async def update_account(id_account: int, request: Request):
+async def update_account(id_account: int, request: Request, session_data: SessionData = Depends(verifier)):
     account_dto = await request.json()
     account_dto['id_account'] = id_account
+    account_dto['id_user'] = session_data.id_user
 
     db = DB()
     con = db.con
@@ -69,21 +68,26 @@ async def update_account(id_account: int, request: Request):
 
 
 @account_router.delete('/delete_account/{id_account}')
-def delete_account(id_account: int):
+def delete_account(id_account: int, session_data: SessionData = Depends(verifier)):
+    id_user = session_data.id_user
     db = DB()
     con = db.con
     cur = db.cur
 
-    cur.execute(SQL.DELETE_ACCOUNT, {'id_account': id_account})
+    cur.execute(SQL.DELETE_ACCOUNT, {
+        'id_account': id_account,
+        'id_user': id_user
+    })
     con.commit()
 
     return None
 
 
 @account_router.post('/upsert_accounts')
-async def upsert_accounts(request: Request):
+async def upsert_accounts(request: Request, session_data: SessionData = Depends(verifier)):
     param = await request.json()
     accounts = param['accounts']
+    id_user = session_data.id_user
 
     db = DB()
     con = db.con
@@ -91,16 +95,20 @@ async def upsert_accounts(request: Request):
 
     for index, account in enumerate(accounts):
         if account['id_account']:
+            account['id_user'] = id_user
             cur.execute(SQL.UPDATE_ACCOUNT, account)
-            cur.execute(SQL.SELECT_ACCOUNT_BY_ID_ACCOUNT, {
-                'id_account': account['id_account']
+            cur.execute(SQL.SELECT_ACCOUNT_BY_ID_ACCOUNT_ID_USER, {
+                'id_account': account['id_account'],
+                'id_user': id_user
             })
             accounts[index] = cur.fetchone()
         else:
+            account['id_user'] = id_user
             cur.execute(SQL.INSERT_ACCOUNT, account)
             id_account = cur.lastrowid
-            cur.execute(SQL.SELECT_ACCOUNT_BY_ID_ACCOUNT, {
-                'id_account': id_account
+            cur.execute(SQL.SELECT_ACCOUNT_BY_ID_ACCOUNT_ID_USER, {
+                'id_account': id_account,
+                'id_user': id_user
             })
             accounts[index] = cur.fetchone()
     con.commit()
@@ -109,17 +117,20 @@ async def upsert_accounts(request: Request):
 
 
 @account_router.post('/delete_accounts')
-async def delete_accounts(request: Request):
+async def delete_accounts(request: Request, session_data: SessionData = Depends(verifier)):
     param = await request.json()
     id_accounts = param['id_accounts']
-    print(id_accounts)
+    id_user = session_data.id_user
 
     db = DB()
     con = db.con
     cur = db.cur
 
     for id_account in id_accounts:
-        cur.execute(SQL.DELETE_ACCOUNT, {'id_account': id_account})
+        cur.execute(SQL.DELETE_ACCOUNT, {
+            'id_account': id_account,
+            'id_user': id_user,
+        })
     con.commit()
 
     return None
