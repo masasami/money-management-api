@@ -1,7 +1,7 @@
-from fastapi import APIRouter, Depends, Request, HTTPException
+from fastapi import APIRouter, Depends, Request
 from modules.db import DB
 from modules.sql import SQL
-from modules.session import SessionData, cookie, verifier, backend
+from modules.session import SessionData, cookie, verifier
 
 account_router = APIRouter(
     dependencies=[Depends(cookie), Depends(verifier)]
