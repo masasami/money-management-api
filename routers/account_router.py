@@ -1,9 +1,10 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends, Request
 from modules.db import DB
 from modules.sql import SQL
-from fastapi.requests import Request
+from modules.session import cookie
 
 account_router = APIRouter()
+account_router.dependencies = [Depends(cookie)]
 
 
 @account_router.get('/get_accounts_by_id_user/{id_user}')

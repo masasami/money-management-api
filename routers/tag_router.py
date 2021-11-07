@@ -1,8 +1,10 @@
-from fastapi import APIRouter, Request
+from fastapi import APIRouter, Depends, Request
 from modules.db import DB
 from modules.sql import SQL
+from modules.session import cookie
 
 tag_router = APIRouter()
+tag_router.dependencies = [Depends(cookie)]
 
 
 @tag_router.get('/get_tags_by_id_user/{id_user}')
