@@ -1,6 +1,7 @@
 
 # ルーター
 from routers.connect_router import connect_router
+from routers.user_router import user_router
 from routers.account_router import account_router
 from routers.tag_router import tag_router
 from routers.session_router import session_router
@@ -24,6 +25,7 @@ app.add_middleware(
 )
 
 app.include_router(connect_router)
+app.include_router(user_router)
 app.include_router(account_router)
 app.include_router(tag_router)
 app.include_router(session_router)

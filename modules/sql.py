@@ -13,6 +13,32 @@ WHERE login_id = %(login_id)s
 AND password = %(password)s
     '''
 
+    INSERT_USER = '''
+INSERT INTO user (
+    name,
+    kana,
+    gender,
+    email,
+    icon_name,
+    login_id,
+    password,
+    dt_birth,
+    dt_create,
+    dt_update
+) VALUES (
+    %(name)s,
+    %(kana)s,
+    %(gender)s,
+    %(email)s,
+    %(icon_name)s,
+    %(login_id)s,
+    %(password)s,
+    %(dt_birth)s,
+    NOW(),
+    NOW()
+)
+    '''
+
     SELECT_ACCOUNT_BY_ID_USER = '''
 SELECT 
     account.*,
