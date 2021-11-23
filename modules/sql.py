@@ -7,6 +7,10 @@ SELECT * FROM user WHERE id_user = %(id_user)s
 SELECT * FROM user WHERE login_id = %(login_id)s
     '''
 
+    SELECT_USER_BY_EMAIL = '''
+SELECT * FROM user WHERE email = %(email)s
+    '''
+
     SELECT_USER_BY_LOGIN_ID_PASSWORD = '''
 SELECT * FROM user 
 WHERE login_id = %(login_id)s
