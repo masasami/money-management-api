@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Request
 from modules.db import DB
 from modules.sql import SQL
+from modules.hash import create_hash
 
 user_router = APIRouter()
 
@@ -13,6 +14,8 @@ async def create_user(request: Request):
     con = db.con
     cur = db.cur
 
+    # パスワードをハッシュ化
+    user_dto['password'] = create_hash(user_dto['password'])
     cur.execute(SQL.INSERT_USER, user_dto)
     con.commit()
 
