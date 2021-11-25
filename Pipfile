@@ -11,6 +11,7 @@ autopep8 = "*"
 uvicorn = "*"
 fastapi-sessions = "*"
 pycryptodome = "*"
+cryptography = "*"
 
 [dev-packages]
 
