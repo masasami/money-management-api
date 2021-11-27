@@ -36,3 +36,11 @@ DB_HOST=
 DB_PORT=
 DB_NAME=
 ```
+
+# pipenv -> requirements.txt
+```bash
+# pipenvのライブラリをrequirements.txtに書き出す
+$ pipenv lock -r > requirements.txt
+# requirements.txtをもとにライブラリインストール
+$ pip install -r requirements.txt
+```
