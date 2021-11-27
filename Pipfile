@@ -12,6 +12,7 @@ uvicorn = "*"
 fastapi-sessions = "*"
 pycryptodome = "*"
 cryptography = "*"
+gunicorn = "*"
 
 [dev-packages]
 
