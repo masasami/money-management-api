@@ -48,7 +48,7 @@ $ pip install -r requirements.txt
 # 本番環境でのFastAPIデーモン化
 ```bash
 # プロジェクトフォルダでgunicornをインストール
-$ cd /var/www/html/money-management-api
+$ cd /var/www/money-management-api
 $ pipenv install gunicorn
 ```
 
@@ -60,9 +60,9 @@ After=network-online.target
 
 [Service]
 User=root
-WorkingDirectory=/var/www/html/money-management-api
-Environment="PATH=/var/www/html/money-management-api/.venv/bin/"
-ExecStart=/var/www/html/money-management-api/.venv/bin/gunicorn -k uvicorn.workers.UvicornWorker main:app
+WorkingDirectory=/var/www/money-management-api
+Environment="PATH=/var/www/money-management-api/.venv/bin/"
+ExecStart=/var/www/money-management-api/.venv/bin/gunicorn -k uvicorn.workers.UvicornWorker main:app
 Restart=always
 RestartSec=3
 
