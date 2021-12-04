@@ -7,6 +7,7 @@ from fastapi_sessions.frontends.implementations import SessionCookie, CookiePara
 from fastapi_sessions.session_verifier import SessionVerifier
 from pydantic import BaseModel
 
+from typing import Optional
 import os
 from uuid import UUID
 from dotenv import load_dotenv
@@ -17,7 +18,12 @@ class SessionData(BaseModel):
     id_user: int
 
 
-cookie_params = CookieParameters()
+class MyCookieParameters(CookieParameters):
+    secure: bool = True
+    samesite: str = 'none'
+
+
+cookie_params = MyCookieParameters()
 cookie = SessionCookie(
     cookie_name='money_management_cookie',
     identifier='general_verifier',
