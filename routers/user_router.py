@@ -17,9 +17,24 @@ async def create_user(request: Request):
     # パスワードをハッシュ化
     user_dto['password'] = create_hash(user_dto['password'])
     cur.execute(SQL.INSERT_USER, user_dto)
+    id_user = cur.lastrowid
+    cur.execute(SQL.INSERT_TAG, {
+        'id_user': id_user,
+        'title': '給料',
+        'color_code': '0000ff'
+    })
+    cur.execute(SQL.INSERT_TAG, {
+        'id_user': id_user,
+        'title': '食費',
+        'color_code': '00ff00'
+    })
+    cur.execute(SQL.INSERT_TAG, {
+        'id_user': id_user,
+        'title': '娯楽費',
+        'color_code': 'ff0000'
+    })
     con.commit()
 
-    id_user = cur.lastrowid
     cur.execute(SQL.SELECT_USER_BY_ID_USER, {'id_user': id_user})
     user = cur.fetchone()
 

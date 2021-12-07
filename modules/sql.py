@@ -133,14 +133,12 @@ SELECT * FROM tag WHERE id_user = %(id_user)s
 
     INSERT_TAG = '''
 INSERT INTO tag (
-    id_tag,
     id_user,
     title,
     color_code,
     dt_create,
     dt_update
 ) VALUES (
-    %(id_tag)s,
     %(id_user)s,
     %(title)s,
     %(color_code)s,
