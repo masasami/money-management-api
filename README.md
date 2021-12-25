@@ -1,4 +1,5 @@
 # 仮想環境の準備
+
 ```bash
 # プロジェクト直下に.venvを作成する設定
 $ export PIPENV_VENV_IN_PROJECT=1
@@ -8,27 +9,32 @@ $ pipenv --rm
 $ pipenv --python 3.9
 ```
 
-# FastAPIの起動
+# FastAPI の起動
+
 ```python
 # Pipfile
 [scripts]
 start = "uvicorn main:app --reload"
 ```
+
 ```bash
 $ pipenv run start
 ```
 
 # シークレットキーの生成
+
 ```bash
 $ python -c 'import os; print(os.urandom(24).hex())'
 ```
 
 # 環境変数に必要な項目
+
 ```
 ALLOW_ORIGIN=
 SECRET_KEY=
 CRYPTO_PASSWORD=
 HASH_KEY=
+API_KEY=
 
 DB_USER=
 DB_PASS=
@@ -38,6 +44,7 @@ DB_NAME=
 ```
 
 # pipenv -> requirements.txt
+
 ```bash
 # pipenvのライブラリをrequirements.txtに書き出す
 $ pipenv lock -r > requirements.txt
@@ -45,7 +52,8 @@ $ pipenv lock -r > requirements.txt
 $ pip install -r requirements.txt
 ```
 
-# 本番環境でのFastAPIデーモン化
+# 本番環境での FastAPI デーモン化
+
 ```bash
 # プロジェクトフォルダでgunicornをインストール
 $ cd /var/www/money-management-api
@@ -77,4 +85,3 @@ $ systemctl daemon-reload
 # 動いてるかを確認
 $ curl localhost:8000
 ```
-
