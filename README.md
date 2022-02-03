@@ -52,6 +52,12 @@ $ pipenv lock -r > requirements.txt
 $ pip install -r requirements.txt
 ```
 
+# requirements.txt -> pipenv
+
+```bash
+$ pipenv install -r requirements.txt
+```
+
 # 本番環境での FastAPI デーモン化
 
 ```bash
