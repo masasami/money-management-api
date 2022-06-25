@@ -91,3 +91,16 @@ $ systemctl daemon-reload
 # 動いてるかを確認
 $ curl localhost:8000
 ```
+
+# vscode での pipenv のライブラリのパス設定
+
+```json
+// .vscode/setting.json
+// or
+// VSCode上で「command + shift + p」 → 「Preferences: Open Settings (JSON)」を検索 → settings.json
+{
+  "python.analysis.extraPaths": [
+    "/Users/masa/Desktop/develop/money-management-api/.venv/lib/python3.9/site-packages"
+  ]
+}
+```
