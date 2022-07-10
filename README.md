@@ -7,6 +7,9 @@ $ export PIPENV_VENV_IN_PROJECT=1
 $ pipenv --rm
 # 仮想環境の作成
 $ pipenv --python 3.9
+
+# 上記を一括で行う場合
+$ export PIPENV_VENV_IN_PROJECT=1 && pipenv --rm && pipenv --python 3.9
 ```
 
 # FastAPI の起動
