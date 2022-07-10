@@ -9,6 +9,7 @@ $ pipenv --rm
 $ pipenv --python 3.9
 
 # 上記を一括で行う場合
+$ export PIPENV_VENV_IN_PROJECT=1 && pipenv --python 3.9
 $ export PIPENV_VENV_IN_PROJECT=1 && pipenv --rm && pipenv --python 3.9
 ```
 
